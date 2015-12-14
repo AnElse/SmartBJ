@@ -1,0 +1,164 @@
+package com.itanelse.smartbj.fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import com.itanelse.smartbj.R;
+import com.itanelse.smartbj.controller.GovController;
+import com.itanelse.smartbj.controller.HomeController;
+import com.itanelse.smartbj.controller.NewsCenterController;
+import com.itanelse.smartbj.controller.SettingCenterController;
+import com.itanelse.smartbj.controller.SmartServiceController;
+import com.itanelse.smartbj.controller.TabController;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
+/**
+ * @项目名称: SmartBJ
+ * @包名: com.itanelse.smartbj.fragment
+ * @类名: ContentFragment
+ * @时间: 下午9:06:50
+ * @作者: AnElse
+ * 
+ * @描述: 主界面的右侧内容界面
+ * 
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
+ * @更新的时间: $date$
+ * @更新的描述: TODO
+ * 
+ */
+public class ContentFragment extends BaseFragment implements OnCheckedChangeListener
+{
+	private List<TabController>	mPagerDatas;
+
+	@ViewInject(R.id.content_pager)
+	private ViewPager			mPager;
+	@ViewInject(R.id.fragmentcontent_rg)
+	private RadioGroup			mRgTabs;
+
+	private int					mCurrentTab;
+
+	@Override
+	public View initView()
+	{
+		View view = View.inflate(mActivity, R.layout.fragment_content, null);
+
+		// XUtils-->ViewUtils:解决View的注入
+
+		// 分析view，找到View中所有的孩子的id,-->view
+		// 反射handler找到对应的注解, @ViewInject-->field--->instance=view
+		ViewUtils.inject(this, view);
+
+		return view;
+	}
+
+	@Override
+	public void initData()
+	{
+		// 数据的加载
+		mPagerDatas = new ArrayList<TabController>();
+		mPagerDatas.add(new HomeController(mActivity));
+		mPagerDatas.add(new NewsCenterController(mActivity));
+		mPagerDatas.add(new SmartServiceController(mActivity));
+		mPagerDatas.add(new GovController(mActivity));
+		mPagerDatas.add(new SettingCenterController(mActivity));
+
+		// ViewPager加载数据
+		mPager.setAdapter(new ContentPagerAdapter());// --->List
+
+		// 设置radioGroup的监听
+		// mRgTabs.setOnCheckedChangeListener(this);
+
+		// 设置默认选中项
+		mRgTabs.check(R.id.content_rb_home);
+	}
+
+	@Override
+	public void initEvent()
+	{
+		// 设置radioGroup的监听
+		mRgTabs.setOnCheckedChangeListener(this);
+		super.initEvent();
+	}
+
+	class ContentPagerAdapter extends PagerAdapter
+	{
+		@Override
+		public int getCount()
+		{
+			if (mPagerDatas != null) { return mPagerDatas.size(); }
+
+			return 0;
+		}
+
+		@Override
+		public boolean isViewFromObject(View view, Object object)
+		{
+			return view == object;
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position)
+		{
+
+			TabController controller = mPagerDatas.get(position);
+			View rootView = controller.getRootView();
+
+			// 加载
+			container.addView(rootView);
+
+			return rootView;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object)
+		{
+			container.removeView((View) object);
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId)
+	{
+		// 当radioButton选中时的回调
+		// @group: 变化的RadioGroup
+		// @checkedId: 选中的radioButton的id
+
+		switch (checkedId)
+		{
+			case R.id.content_rb_home:
+				mCurrentTab = 0;
+				// 不可以打开menu
+				break;
+			case R.id.content_rb_newscenter:
+				mCurrentTab = 1;
+				// 以打开menu
+				break;
+			case R.id.content_rb_smartsevice:
+				mCurrentTab = 2;
+				// 以打开menu
+				break;
+			case R.id.content_rb_gov:
+				mCurrentTab = 3;
+				// 以打开menu
+				break;
+			case R.id.content_rb_setting:
+				mCurrentTab = 4;
+				// 不可以打开menu
+				break;
+			default:
+				break;
+		}
+		// 设置ViewPager的选中
+		mPager.setCurrentItem(mCurrentTab);
+	}
+
+}
