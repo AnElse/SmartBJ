@@ -15,8 +15,8 @@ import android.widget.TextView;
  * 
  * @描述: 新闻中心Controller
  *
- * @当前版本号: $Rev$
- * @更新人: $Author$
+ * @当前版本号: $Rev: 7 $
+ * @更新人: $Author: vaio $
  * @更新的时间: $date$
  * @更新的描述: TODO
  *
@@ -32,6 +32,8 @@ public class NewsCenterController extends TabController
 	@Override
 	protected View initContentView(Context context)
 	{
+		mIvMenu.setVisibility(View.VISIBLE);
+		
 		TextView tv = new TextView(context);
 		tv.setText("新闻中心");
 		tv.setTextSize(24);

@@ -15,8 +15,8 @@ import android.widget.TextView;
  * 
  * @描述: 首页controller
  *
- * @当前版本号: $Rev: 7 $
- * @更新人: $Author: vaio $
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
  * @更新的时间: $date$
  * @更新的描述: TODO
  *
@@ -32,8 +32,6 @@ public class HomeController extends TabController
 	@Override
 	protected View initContentView(Context context)
 	{
-		mIvMenu.setVisibility(View.GONE);
-		
 		TextView tv = new TextView(context);
 		tv.setText("首页");
 		tv.setTextSize(24);

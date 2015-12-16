@@ -16,8 +16,8 @@ import android.view.ViewGroup;
  * 
  * @描述: 所有fragment的基类
  * 
- * @当前版本号: $Rev: 6 $
- * @更新人: $Author: vaio $
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
  * @更新的时间: $date$
  * @更新的描述: TODO
  * 

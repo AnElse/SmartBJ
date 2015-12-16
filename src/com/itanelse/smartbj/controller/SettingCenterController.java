@@ -15,8 +15,8 @@ import android.widget.TextView;
  * 
  * @描述: 设置中心controller
  *
- * @当前版本号: $Rev$
- * @更新人: $Author$
+ * @当前版本号: $Rev: 7 $
+ * @更新人: $Author: vaio $
  * @更新的时间: $date$
  * @更新的描述: TODO
  *
@@ -32,6 +32,8 @@ public class SettingCenterController extends TabController
 	@Override
 	protected View initContentView(Context context)
 	{
+		mIvMenu.setVisibility(View.GONE);
+		
 		TextView tv = new TextView(context);
 		tv.setText("设置中心");
 		tv.setTextSize(24);

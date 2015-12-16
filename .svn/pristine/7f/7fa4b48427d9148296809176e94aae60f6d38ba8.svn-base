@@ -13,18 +13,18 @@ import android.widget.TextView;
  * @时间: 下午6:00:20
  * @作者: AnElse
  * 
- * @描述: 首页controller
+ * @描述: 设置中心controller
  *
- * @当前版本号: $Rev: 7 $
- * @更新人: $Author: vaio $
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
  * @更新的时间: $date$
  * @更新的描述: TODO
  *
  */
-public class HomeController extends TabController
+public class SettingCenterController extends TabController
 {
 
-	public HomeController(Context context) {
+	public SettingCenterController(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
@@ -32,10 +32,8 @@ public class HomeController extends TabController
 	@Override
 	protected View initContentView(Context context)
 	{
-		mIvMenu.setVisibility(View.GONE);
-		
 		TextView tv = new TextView(context);
-		tv.setText("首页");
+		tv.setText("设置中心");
 		tv.setTextSize(24);
 		tv.setGravity(Gravity.CENTER);
 		tv.setTextColor(Color.RED);

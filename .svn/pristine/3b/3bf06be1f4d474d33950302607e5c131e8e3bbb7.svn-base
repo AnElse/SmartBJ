@@ -11,14 +11,12 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.itanelse.smartbj.R;
-import com.itanelse.smartbj.activity.MainUI;
 import com.itanelse.smartbj.controller.GovController;
 import com.itanelse.smartbj.controller.HomeController;
 import com.itanelse.smartbj.controller.NewsCenterController;
 import com.itanelse.smartbj.controller.SettingCenterController;
 import com.itanelse.smartbj.controller.SmartServiceController;
 import com.itanelse.smartbj.controller.TabController;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -31,8 +29,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * 
  * @描述: 主界面的右侧内容界面
  * 
- * @当前版本号: $Rev: 7 $
- * @更新人: $Author: vaio $
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
  * @更新的时间: $date$
  * @更新的描述: TODO
  * 
@@ -139,39 +137,28 @@ public class ContentFragment extends BaseFragment implements OnCheckedChangeList
 			case R.id.content_rb_home:
 				mCurrentTab = 0;
 				// 不可以打开menu
-				setSlidingMenuTouchEnable(false);
 				break;
 			case R.id.content_rb_newscenter:
 				mCurrentTab = 1;
 				// 以打开menu
-				setSlidingMenuTouchEnable(true);
 				break;
 			case R.id.content_rb_smartsevice:
 				mCurrentTab = 2;
 				// 以打开menu
-				setSlidingMenuTouchEnable(true);
 				break;
 			case R.id.content_rb_gov:
 				mCurrentTab = 3;
 				// 以打开menu
-				setSlidingMenuTouchEnable(true);
 				break;
 			case R.id.content_rb_setting:
 				mCurrentTab = 4;
 				// 不可以打开menu
-				setSlidingMenuTouchEnable(false);
 				break;
 			default:
 				break;
 		}
 		// 设置ViewPager的选中
 		mPager.setCurrentItem(mCurrentTab);
-	}
-
-	private void setSlidingMenuTouchEnable(boolean enable)
-	{
-		SlidingMenu slidingMenu = ((MainUI) mActivity).getSlidingMenu();
-		slidingMenu.setTouchModeAbove(enable ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_NONE);
 	}
 
 }

@@ -17,8 +17,8 @@ import android.widget.TextView;
  * 
  * @描述: 所有controller界面的基类
  * 
- * @当前版本号: $Rev: 7 $
- * @更新人: $Author: vaio $
+ * @当前版本号: $Rev$
+ * @更新人: $Author$
  * @更新的时间: $date$
  * @更新的描述: TODO
  * 
@@ -27,9 +27,9 @@ public abstract class TabController
 {
 	protected View		mRootView;
 	protected Context	mContext;
-	protected  ImageView	mIvMenu;
-	protected  TextView	mTvTitle;
-	protected  FrameLayout	mContentContainer;
+	private ImageView	mIvMenu;
+	private TextView	mTvTitle;
+	private FrameLayout	mContentContainer;
 
 	public TabController(Context context) {
 		this.mContext = context;
