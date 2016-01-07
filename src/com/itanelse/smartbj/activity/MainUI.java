@@ -76,4 +76,15 @@ public class MainUI extends SlidingFragmentActivity
 
 		transaction.commit();
 	}
+
+	/**
+	 * 获取左侧菜单的fragment
+	 * 
+	 * @return MenuFragment 左侧菜单实例
+	 */
+	public MenuFragment getMenuFragment()
+	{
+		FragmentManager fm = getSupportFragmentManager();
+		return (MenuFragment) fm.findFragmentByTag(TAG_LEFT);
+	}
 }

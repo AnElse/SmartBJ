@@ -25,11 +25,11 @@ import android.widget.TextView;
  */
 public abstract class TabController
 {
-	protected View		mRootView;
-	protected Context	mContext;
-	protected  ImageView	mIvMenu;
-	protected  TextView	mTvTitle;
-	protected  FrameLayout	mContentContainer;
+	protected View			mRootView;
+	protected Context		mContext;
+	protected ImageView		mIvMenu;
+	protected TextView		mTvTitle;
+	protected FrameLayout	mContentContainer;
 
 	public TabController(Context context) {
 		this.mContext = context;
@@ -51,7 +51,7 @@ public abstract class TabController
 		mContentContainer = (FrameLayout) view.findViewById(R.id.base_tab_content_container);
 
 		View contentView = initContentView(context);
-		//添加到布局中
+		// 添加到布局中
 		mContentContainer.addView(contentView);
 		return view;
 	}
@@ -61,5 +61,13 @@ public abstract class TabController
 	public View getRootView()
 	{
 		return mRootView;
+	}
+
+	/**
+	 * 数据加载的方法,如果子类有数据加载,那么就去复写
+	 */
+	public void initDate()
+	{
+
 	}
 }

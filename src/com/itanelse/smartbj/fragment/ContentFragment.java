@@ -42,11 +42,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class ContentFragment extends BaseFragment implements OnCheckedChangeListener
 {
 	private static final String	TAG	= "ContentFragment";
-	
+
 	private List<TabController>	mPagerDatas;
 
 	@ViewInject(R.id.content_pager)
-	private LazyViewPager			mPager;
+	private LazyViewPager		mPager;
 	@ViewInject(R.id.fragmentcontent_rg)
 	private RadioGroup			mRgTabs;
 
@@ -119,6 +119,8 @@ public class ContentFragment extends BaseFragment implements OnCheckedChangeList
 
 			TabController controller = mPagerDatas.get(position);
 			View rootView = controller.getRootView();
+
+			controller.initDate();// 让controller自己去加载自己的数据,所以TabController需要加上initData()方法
 
 			// 加载
 			container.addView(rootView);
