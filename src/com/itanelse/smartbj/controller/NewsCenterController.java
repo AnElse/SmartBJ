@@ -1,5 +1,7 @@
 package com.itanelse.smartbj.controller;
 
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.itanelse.smartbj.activity.MainUI;
 import com.itanelse.smartbj.bean.NewsCenterBean;
+import com.itanelse.smartbj.bean.NewsCenterBean.NewsCenterMenuBean;
 import com.itanelse.smartbj.fragment.MenuFragment;
 import com.itanelse.smartbj.utils.Constans;
 import com.itanelse.smartbj.utils.LogUtils;
@@ -36,6 +39,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
  */
 public class NewsCenterController extends TabController
 {
+	List<NewsCenterMenuBean>		mMenuDatas;						// 获取到bean中的数据
 
 	protected static final String	TAG	= "NewsCenterController";
 
@@ -115,12 +119,13 @@ public class NewsCenterController extends TabController
 		Gson gson = new Gson();
 		NewsCenterBean bean = gson.fromJson(json, NewsCenterBean.class);
 		// LogUtils.d(TAG, "校验:"+bean.data.get(0).children.get(0).title);
-		
+		mMenuDatas = bean.data;// bean中的数据
+
 		// 3,把object对象的数据显示到view上.
-		//3-1,将数据添加到菜单上
-		MenuFragment menuFragment = ((MainUI)mContext).getMenuFragment();
-		//给menuFragment设置数据-->展示:TODO
-		
-		//3-2,中间内容区域加载数据
+		// 3-1,将数据添加到菜单上
+		MenuFragment menuFragment = ((MainUI) mContext).getMenuFragment();
+		// 给menuFragment设置数据-->展示:TODO
+		menuFragment.setData(mMenuDatas);
+		// 3-2,中间内容区域加载数据
 	}
 }
