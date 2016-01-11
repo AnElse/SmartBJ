@@ -1,11 +1,13 @@
-package com.itanelse.smartbj.controller;
+package com.itanelse.smartbj.controller.tab;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,12 @@ import com.google.gson.Gson;
 import com.itanelse.smartbj.activity.MainUI;
 import com.itanelse.smartbj.bean.NewsCenterBean;
 import com.itanelse.smartbj.bean.NewsCenterBean.NewsCenterMenuBean;
+import com.itanelse.smartbj.controller.MenuController;
+import com.itanelse.smartbj.controller.TabController;
+import com.itanelse.smartbj.controller.menu.InteractMenuController;
+import com.itanelse.smartbj.controller.menu.NewsMenuController;
+import com.itanelse.smartbj.controller.menu.PicMenuController;
+import com.itanelse.smartbj.controller.menu.TopicMenuController;
 import com.itanelse.smartbj.fragment.MenuFragment;
 import com.itanelse.smartbj.utils.Constans;
 import com.itanelse.smartbj.utils.LogUtils;
@@ -29,7 +37,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
  * @时间: 下午6:00:20
  * @作者: AnElse
  * 
- * @描述: 新闻中心Controller
+ * @描述: 新闻中心Controller,用来管理Menuontroller显示切换
  * 
  * @当前版本号: $Rev: 7 $
  * @更新人: $Author: vaio $
@@ -39,9 +47,12 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
  */
 public class NewsCenterController extends TabController
 {
-	List<NewsCenterMenuBean>		mMenuDatas;						// 获取到bean中的数据
+	List<NewsCenterMenuBean>		mMenuDatas;					// 获取到bean中的数据
 
 	protected static final String	TAG	= "NewsCenterController";
+
+	private List<MenuController>	mMenuControllers;				// 菜单对应的控制器
+	private FrameLayout				mContainer;					// 负责切换controller对应的view;
 
 	public NewsCenterController(Context context) {
 		super(context);
@@ -53,13 +64,14 @@ public class NewsCenterController extends TabController
 	{
 		mIvMenu.setVisibility(View.VISIBLE);
 
-		TextView tv = new TextView(context);
-		tv.setText("新闻中心");
-		tv.setTextSize(24);
-		tv.setGravity(Gravity.CENTER);
-		tv.setTextColor(Color.RED);
+		// TextView tv = new TextView(context);
+		// tv.setText("新闻中心");
+		// tv.setTextSize(24);
+		// tv.setGravity(Gravity.CENTER);
+		// tv.setTextColor(Color.RED);
+		mContainer = new FrameLayout(context);
 
-		return tv;
+		return mContainer;
 	}
 
 	@Override
@@ -127,5 +139,47 @@ public class NewsCenterController extends TabController
 		// 给menuFragment设置数据-->展示:TODO
 		menuFragment.setData(mMenuDatas);
 		// 3-2,中间内容区域加载数据
+		// MVC:
+		// NewsCenterController-->controller
+		// mContainer-->view
+		// mMenuControllers-->model
+		mMenuControllers = new ArrayList<MenuController>();
+		for (int i = 0; i < mMenuDatas.size(); i++)
+		{
+			int type = mMenuDatas.get(i).type;// 获取到menuitem的type
+			MenuController controller = null;
+			switch (type)
+			{
+				case 1:
+					// 新闻
+					controller = new NewsMenuController(mContext);
+					break;
+				case 10:
+					// 专题
+					controller = new TopicMenuController(mContext);
+				case 2:
+					// 组图
+					controller = new PicMenuController(mContext);
+				case 3:
+					// 互动
+					controller = new InteractMenuController(mContext);
+				default:
+					break;
+			}
+			mMenuControllers.add(controller);
+		}
+		switchMenuItem(0);// 选中第一个
+	}
+
+	/**
+	 * 新闻中心tab去实现自己的菜单item切换
+	 */
+	@Override
+	public void switchMenuItem(int menuItem)
+	{
+		MenuController controller = mMenuControllers.get(menuItem);// 被选中的controller
+		// 需要显示的view
+		View rootView = controller.getRootView();
+		mContainer.addView(rootView);
 	}
 }

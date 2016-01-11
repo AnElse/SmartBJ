@@ -87,4 +87,15 @@ public class MainUI extends SlidingFragmentActivity
 		FragmentManager fm = getSupportFragmentManager();
 		return (MenuFragment) fm.findFragmentByTag(TAG_LEFT);
 	}
+
+	/**
+	 * 获取内容菜单的fragment
+	 * 
+	 * @return ContentFragment 右侧内容实例
+	 */
+	public ContentFragment getContentFragment()
+	{
+		FragmentManager fm = getSupportFragmentManager();
+		return (ContentFragment) fm.findFragmentByTag(TAG_CONTENT);
+	}
 }

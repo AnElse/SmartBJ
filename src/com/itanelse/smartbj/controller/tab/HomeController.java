@@ -1,4 +1,6 @@
-package com.itanelse.smartbj.controller;
+package com.itanelse.smartbj.controller.tab;
+
+import com.itanelse.smartbj.controller.TabController;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,7 +15,7 @@ import android.widget.TextView;
  * @时间: 下午6:00:20
  * @作者: AnElse
  * 
- * @描述: 政务controller
+ * @描述: 首页controller
  *
  * @当前版本号: $Rev: 7 $
  * @更新人: $Author: vaio $
@@ -21,10 +23,10 @@ import android.widget.TextView;
  * @更新的描述: TODO
  *
  */
-public class GovController extends TabController
+public class HomeController extends TabController
 {
 
-	public GovController(Context context) {
+	public HomeController(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
@@ -32,16 +34,13 @@ public class GovController extends TabController
 	@Override
 	protected View initContentView(Context context)
 	{
-		mIvMenu.setVisibility(View.VISIBLE);
+		mIvMenu.setVisibility(View.GONE);
 		
 		TextView tv = new TextView(context);
-		tv.setText("政务");
+		tv.setText("首页");
 		tv.setTextSize(24);
 		tv.setGravity(Gravity.CENTER);
 		tv.setTextColor(Color.RED);
-
 		return tv;
 	}
-
 }
-

@@ -13,12 +13,12 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.itanelse.smartbj.R;
 import com.itanelse.smartbj.activity.MainUI;
-import com.itanelse.smartbj.controller.GovController;
-import com.itanelse.smartbj.controller.HomeController;
-import com.itanelse.smartbj.controller.NewsCenterController;
-import com.itanelse.smartbj.controller.SettingCenterController;
-import com.itanelse.smartbj.controller.SmartServiceController;
 import com.itanelse.smartbj.controller.TabController;
+import com.itanelse.smartbj.controller.tab.GovController;
+import com.itanelse.smartbj.controller.tab.HomeController;
+import com.itanelse.smartbj.controller.tab.NewsCenterController;
+import com.itanelse.smartbj.controller.tab.SettingCenterController;
+import com.itanelse.smartbj.controller.tab.SmartServiceController;
 import com.itanelse.smartbj.view.LazyViewPager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
@@ -50,7 +50,7 @@ public class ContentFragment extends BaseFragment implements OnCheckedChangeList
 	@ViewInject(R.id.fragmentcontent_rg)
 	private RadioGroup			mRgTabs;
 
-	private int					mCurrentTab;
+	private int					mCurrentTab;				// 当前是哪个tab选中了
 
 	@Override
 	public View initView()
@@ -181,6 +181,20 @@ public class ContentFragment extends BaseFragment implements OnCheckedChangeList
 	{
 		SlidingMenu slidingMenu = ((MainUI) mActivity).getSlidingMenu();
 		slidingMenu.setTouchModeAbove(enable ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_NONE);
+	}
+
+	/**
+	 * 让contentFragemnt中当前的tab去选中对应的menuitem,即切换对应menuitem
+	 * 
+	 * @param menuItem
+	 *            :menu的position
+	 */
+	public void switchMenuItem(int menuItem)
+	{
+		//让当前的tab去选中对应的menuitem
+		TabController controller = mPagerDatas.get(mCurrentTab);
+		//但不是所有的tab都有菜单,所以让tab自己去实现
+		controller.switchMenuItem(menuItem);
 	}
 
 }

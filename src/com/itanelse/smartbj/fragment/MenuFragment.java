@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.itanelse.smartbj.R;
+import com.itanelse.smartbj.activity.MainUI;
 import com.itanelse.smartbj.bean.NewsCenterBean.NewsCenterMenuBean;
 
 /**
@@ -50,7 +50,7 @@ public class MenuFragment extends BaseFragment implements OnItemClickListener
 		mListView.setDividerHeight(0);// 去掉分割线
 		mListView.setFadingEdgeLength(0);// 去掉雾状机构
 		mListView.setScrollbarFadingEnabled(false);// 解决设置图片背景拖拽出现的白色一大片
-		mListView.setSelector(android.R.color.transparent);//设置去掉menuitem点击的背景
+		mListView.setSelector(android.R.color.transparent);// 设置去掉menuitem点击的背景
 		mListView.setPadding(0, 40, 0, 40);
 
 		// 设置item的点击事件
@@ -152,5 +152,10 @@ public class MenuFragment extends BaseFragment implements OnItemClickListener
 		// 切换选中的item
 		mCurrentItem = position;
 		menuAdapter.notifyDataSetChanged();// 让适配器去更新选中的菜单界面
+		
+		//让对应的tab显示对应的menu页面(因为新闻中心,智慧服务,政务都有菜单)
+		ContentFragment contentFragment = ((MainUI) mActivity).getContentFragment();
+		//让contentFragemnt中当前的tab去选中对应的menuitem
+		contentFragment.switchMenuItem(mCurrentItem);
 	}
 }

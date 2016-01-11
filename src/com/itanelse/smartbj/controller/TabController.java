@@ -70,4 +70,13 @@ public abstract class TabController
 	{
 
 	}
+
+	/**
+	 * 让对应的tab去选中menuitem
+	 */
+	public void switchMenuItem(int menuItem)
+	{
+		
+	}
+
 }
