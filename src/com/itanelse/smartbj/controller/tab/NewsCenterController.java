@@ -157,9 +157,11 @@ public class NewsCenterController extends TabController
 				case 10:
 					// 专题
 					controller = new TopicMenuController(mContext);
+					break;
 				case 2:
 					// 组图
 					controller = new PicMenuController(mContext);
+					break;
 				case 3:
 					// 互动
 					controller = new InteractMenuController(mContext);
@@ -172,11 +174,20 @@ public class NewsCenterController extends TabController
 	}
 
 	/**
-	 * 新闻中心tab去实现自己的菜单item切换
+	 * 新闻中心tab去实现自己的菜单controller页面的切换
 	 */
 	@Override
 	public void switchMenuItem(int menuItem)
 	{
+		// 显示对应的menucontroller
+
+		// 点击切换前清空view
+		mContainer.removeAllViews();
+
+		// 设置标题显示
+		NewsCenterMenuBean bean = mMenuDatas.get(menuItem);
+		mTvTitle.setText(bean.title);
+
 		MenuController controller = mMenuControllers.get(menuItem);// 被选中的controller
 		// 需要显示的view
 		View rootView = controller.getRootView();

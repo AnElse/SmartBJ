@@ -1,12 +1,14 @@
 package com.itanelse.smartbj.controller;
 
-import com.itanelse.smartbj.R;
-
 import android.content.Context;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.itanelse.smartbj.R;
+import com.itanelse.smartbj.activity.MainUI;
 
 /**
  * @项目名称: SmartBJ
@@ -23,7 +25,7 @@ import android.widget.TextView;
  * @更新的描述: TODO
  * 
  */
-public abstract class TabController
+public abstract class TabController implements OnClickListener
 {
 	protected View			mRootView;
 	protected Context		mContext;
@@ -53,6 +55,9 @@ public abstract class TabController
 		View contentView = initContentView(context);
 		// 添加到布局中
 		mContentContainer.addView(contentView);
+
+		// 设置点击事件
+		mIvMenu.setOnClickListener(this);
 		return view;
 	}
 
@@ -76,7 +81,20 @@ public abstract class TabController
 	 */
 	public void switchMenuItem(int menuItem)
 	{
-		
+
 	}
 
+	@Override
+	public void onClick(View v)
+	{
+		if (v == mIvMenu)
+		{
+			toggleMenu();
+		}
+	}
+
+	private void toggleMenu()
+	{
+		((MainUI)mContext).getSlidingMenu().toggle();
+	}
 }

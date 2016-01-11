@@ -152,10 +152,13 @@ public class MenuFragment extends BaseFragment implements OnItemClickListener
 		// 切换选中的item
 		mCurrentItem = position;
 		menuAdapter.notifyDataSetChanged();// 让适配器去更新选中的菜单界面
-		
-		//让对应的tab显示对应的menu页面(因为新闻中心,智慧服务,政务都有菜单)
+
+		// 让对应的tab显示对应的menu页面(因为新闻中心,智慧服务,政务都有菜单)
 		ContentFragment contentFragment = ((MainUI) mActivity).getContentFragment();
-		//让contentFragemnt中当前的tab去选中对应的menuitem
+		// 让contentFragemnt中当前的tab去选中对应的menuitem
 		contentFragment.switchMenuItem(mCurrentItem);
+
+		// 设置slidngmenu的打开和关闭
+		((MainUI) mActivity).getSlidingMenu().toggle();// 如果是打开的就关闭,否则相反
 	}
 }
