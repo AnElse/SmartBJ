@@ -37,11 +37,16 @@ public class CacheUtils
 		SharedPreferences sp = getSp(context);
 		return sp.getBoolean(key, false);
 	}
+
 	/**
 	 * 获取记录第一次进入界面的缓存
-	 * @param context 上下文
-	 * @param key 键
-	 * @param defValue 默认值
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param key
+	 *            键
+	 * @param defValue
+	 *            默认值
 	 * @return
 	 */
 	public static Boolean isFirstTime(Context context, String key, boolean defValue)
@@ -49,15 +54,69 @@ public class CacheUtils
 		SharedPreferences sp = getSp(context);
 		return sp.getBoolean(key, defValue);
 	}
-	
+
 	/**
 	 * 保存是否第一次进入主界面的缓存值
-	 * @param context 上下文
-	 * @param key 保存的键
-	 * @param value 保存的值
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param key
+	 *            保存的键
+	 * @param value
+	 *            保存的值
 	 */
-	public static void setBoolean(Context context,String key,boolean value){
+	public static void setBoolean(Context context, String key, boolean value)
+	{
 		SharedPreferences sp = getSp(context);
 		sp.edit().putBoolean(key, value).commit();
+	}
+
+	/**
+	 * 获取记录新闻中心新闻页面的标题缓存
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param key
+	 *            键
+	 * @param defValue
+	 *            默认值
+	 * @return
+	 */
+	public static String getString(Context context, String key)
+	{
+		SharedPreferences sp = getSp(context);
+		return sp.getString(key, null);
+	}
+
+	/**
+	 * 获取记录新闻中心新闻页面的标题缓存
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param key
+	 *            保存的键
+	 * @param value
+	 *            保存的值
+	 */
+	public static String getString(Context context, String key, String value)
+	{
+		SharedPreferences sp = getSp(context);
+		return sp.getString(key, value);
+	}
+
+	/**
+	 * 设置是否第一次进入主界面的缓存值
+	 * 
+	 * @param context
+	 *            上下文
+	 * @param key
+	 *            保存的键
+	 * @param value
+	 *            保存的值
+	 */
+	public static void setString(Context context, String key, String value)
+	{
+		SharedPreferences sp = getSp(context);
+		sp.edit().putString(key, value).commit();
 	}
 }

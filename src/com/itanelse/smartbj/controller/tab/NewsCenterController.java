@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,6 +23,7 @@ import com.itanelse.smartbj.controller.menu.NewsMenuController;
 import com.itanelse.smartbj.controller.menu.PicMenuController;
 import com.itanelse.smartbj.controller.menu.TopicMenuController;
 import com.itanelse.smartbj.fragment.MenuFragment;
+import com.itanelse.smartbj.utils.CacheUtils;
 import com.itanelse.smartbj.utils.Constans;
 import com.itanelse.smartbj.utils.LogUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -70,19 +72,28 @@ public class NewsCenterController extends TabController
 		// tv.setGravity(Gravity.CENTER);
 		// tv.setTextColor(Color.RED);
 		mContainer = new FrameLayout(context);
-
 		return mContainer;
 	}
 
 	@Override
 	public void initDate()
 	{
+		final String url = Constans.NEWSCENTER_URL;// url
+
+		// 即使是有网的情况下,我们也是先去读取的.为了提高应用程序的响应时间,数据缓存是一种比较好的方式,我们可以预处理服务器返回的数据,对数据进行缓存刷新.
+		// 将读取到的缓存数据展示出来
+		String json = CacheUtils.getString(mContext, url);
+		if (!TextUtils.isEmpty(json))
+		{
+			LogUtils.d(TAG, "读取缓存");
+			performData(json);// 将获取到的服务器数据展示出来
+		}
+
 		// 加载数据(基本上为三个步骤)
 
 		// 1,进行网络访问获取网络数据
 		// 请求网络,关注点:请求方法,URL,请求头,请求内容(参数:GET->请求消息行URL后面,POST->请求内容里)
 		HttpUtils utils = new HttpUtils();// 是一个异步方法
-		String url = Constans.NEWSCENTER_URL;// url
 		// RequestParams params = new RequestParams();
 		// params.addHeader(name, value);//添加头
 		// params.addQueryStringParameter(name, value);//get方法的请求内容
@@ -112,6 +123,9 @@ public class NewsCenterController extends TabController
 				String result = responseInfo.result;
 				LogUtils.d(TAG, "成功" + result);
 
+				CacheUtils.setString(mContext, url, result);
+
+				// 将获取到的服务器数据展示出来
 				performData(result);
 			}
 
@@ -146,13 +160,14 @@ public class NewsCenterController extends TabController
 		mMenuControllers = new ArrayList<MenuController>();
 		for (int i = 0; i < mMenuDatas.size(); i++)
 		{
-			int type = mMenuDatas.get(i).type;// 获取到menuitem的type
+			NewsCenterMenuBean menuBean = mMenuDatas.get(i);
+			int type = menuBean.type;// 获取到menuitem的type
 			MenuController controller = null;
 			switch (type)
 			{
 				case 1:
 					// 新闻
-					controller = new NewsMenuController(mContext);
+					controller = new NewsMenuController(mContext, menuBean.children);
 					break;
 				case 10:
 					// 专题
@@ -191,6 +206,10 @@ public class NewsCenterController extends TabController
 		MenuController controller = mMenuControllers.get(menuItem);// 被选中的controller
 		// 需要显示的view
 		View rootView = controller.getRootView();
+
+		// 加载数据(上面完成了界面的切换,这里暴露出让MenuController实现数据加载的方法)
+		controller.initData();
+
 		mContainer.addView(rootView);
 	}
 }
